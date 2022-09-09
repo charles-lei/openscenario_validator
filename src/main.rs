@@ -9,7 +9,7 @@ use clap::Parser as ClapParser;
 #[clap(name = "OpenScenario File Validator")]
 #[clap(author = "Leili. <leili@guardstrike.com>")]
 #[clap(version = "v0.1")]
-#[clap(about = "This Program can validtate Openscenario File(xml) against xsd!", long_about = None)]
+#[clap(about = "This Program could validate Openscenario File(XML) against XSD!", long_about = None)]
 struct Args {
    ///XML Path 
    #[clap(long, value_parser)]
@@ -46,12 +46,24 @@ fn validate(xml_path: &str, xsd_path: &str) -> Result<String, Vec<StructuredErro
 
 #[test]
 fn test_openscenario1_0(){
-  let _ = validate("tests/openscenario1.0.xml", "tests/openscenario1.0.xsd");
+  let result = validate("tests/openscenario1.0.xml", "tests/openscenario1.0.xsd");
+  match result{
+    Ok(msg) => {println!("{}", msg)},
+    Err(_) => {
+      panic!("Failed")
+    }
+  }
 }
 
 #[test]
 fn test_openscenario1_2(){
-  let _ = validate("tests/openscenario1.0.xml", "tests/openscenario1.2.xsd");
+  let result = validate("tests/openscenario1.0.xml", "tests/openscenario1.2.xsd");
+  match result{
+    Ok(msg) => {println!("{}", msg)},
+    Err(_) => {
+      panic!("Failed")
+    }
+  }
 }
 
 #[test]
