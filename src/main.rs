@@ -1,3 +1,5 @@
+
+use walkdir::WalkDir;
 use libxml::error::StructuredError;
 use libxml::schemas::SchemaParserContext;
 use libxml::schemas::SchemaValidationContext;
@@ -41,7 +43,7 @@ fn validate(xml_path: &str, xsd_path: &str) -> Result<String, Vec<StructuredErro
   let mut xsdparser = SchemaParserContext::from_file(xsd_path);
   let mut xsd = SchemaValidationContext::from_parser(&mut xsdparser)?;
   xsd.validate_document(&xml)?;
-  Ok(String::from("Success"))
+  Ok(String::from(format!("Validate {} Success", xml_path)))
 }
 
 #[test]
@@ -57,11 +59,23 @@ fn test_openscenario1_0(){
 
 #[test]
 fn test_openscenario1_2(){
-  let result = validate("tests/openscenario1.0.xml", "tests/openscenario1.2.xsd");
-  match result{
-    Ok(msg) => {println!("{}", msg)},
-    Err(_) => {
-      panic!("Failed")
+  for entry in WalkDir::new("tests/OpenScenario1.2") {
+    if let Ok(dir_entry) = entry {
+      let e = dir_entry.clone();
+      if let Some(ext) = dir_entry.into_path().extension(){
+        if ext.to_str() == Some("xosc"){
+          //println!("{:?}", e.into_path().to_str());
+          if let Some(xml_path) = e.into_path().to_str() {
+            let result = validate(xml_path, "tests/openscenario1.2.xsd");
+            match result{
+              Ok(msg) => {println!("{}", msg)},
+              Err(_) => {
+                panic!("Failed")
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
