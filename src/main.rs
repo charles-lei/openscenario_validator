@@ -1,5 +1,4 @@
 
-use walkdir::WalkDir;
 use libxml::error::StructuredError;
 use libxml::schemas::SchemaParserContext;
 use libxml::schemas::SchemaValidationContext;
@@ -58,26 +57,21 @@ fn test_openscenario1_0(){
 }
 
 #[test]
-fn test_openscenario1_2(){
-  for entry in WalkDir::new("tests/OpenScenario1.2") {
-    if let Ok(dir_entry) = entry {
-      let e = dir_entry.clone();
-      if let Some(ext) = dir_entry.into_path().extension(){
-        if ext.to_str() == Some("xosc"){
-          //println!("{:?}", e.into_path().to_str());
-          if let Some(xml_path) = e.into_path().to_str() {
-            let result = validate(xml_path, "tests/openscenario1.2.xsd");
-            match result{
-              Ok(msg) => {println!("{}", msg)},
-              Err(_) => {
-                panic!("Failed")
-              }
-            }
-          }
+fn test_openscenario1_2() -> Result<(), walkdir::Error>{
+  for entry in walkdir::WalkDir::new("tests/OpenScenario1.2") {
+    let e = entry?.clone();
+    let path = e.path();
+    if path.extension().unwrap_or_default().to_str().unwrap().eq("xosc"){
+      let result = validate(path.to_str().unwrap(), "tests/openscenario1.2.xsd");
+      match result{
+        Ok(msg) => {println!("{}", msg)},
+        Err(_) => {
+          panic!("Failed")
         }
       }
     }
   }
+  Ok(())
 }
 
 #[test]
