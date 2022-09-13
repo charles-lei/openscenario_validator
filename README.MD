@@ -1,7 +1,7 @@
 Openscenario XML File Validator
 =====================================
 
-  This Program can validtate Openscenario File(xml) against xsd!
+  This Program can validate Openscenario File(xml) against xsd!
 
 Getting started
 ===============
