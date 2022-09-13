@@ -8,9 +8,10 @@
         "type": "lldb",
         "request": "launch",
         "name": "Launch",
-        "program": "${workspaceFolder}/target/debug/greeting.exe",
-        "args": [],
-        "cwd": "${workspaceFolder}"
+        "program": "${workspaceFolder}/target/debug/scenario_validator",
+        "args": ["-h"],
+        "cwd": "${workspaceFolder}",
+        "console": "internalConsole"
     }
     ]
 }
