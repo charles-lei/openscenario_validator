@@ -14,16 +14,16 @@ use clap::Parser as ClapParser;
 struct Args {
    ///XML Path 
    #[clap(long, value_parser)]
-   xml_path: String,
+   xml: String,
 
    ///XSD Path
    #[clap(long, value_parser)]
-   xsd_path: String,
+   xsd: String,
 }
 
 fn main() {
   let args = Args::parse();
-  let result = validate(&args.xml_path.as_ref(), &args.xsd_path.as_ref());
+  let result = validate(&args.xml.as_ref(), &args.xsd.as_ref());
   match result{
     Ok(msg) => {println!("{}", msg)},
     Err(errors) => {
