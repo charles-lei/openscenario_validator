@@ -1,7 +1,7 @@
 Openscenario XML File Validator
 =====================================
 
-  This Program can validtate Openscenario File(xml) against xsd!
+  This Program can validate Openscenario File(xml) against xsd!
 
 Getting started
 ===============
@@ -12,6 +12,8 @@ You can also build it from source:
 Install Rust on your PC, This Repo depends on [libxml2](https://github.com/GNOME/libxml2). 
 
 ```shell
+//Ubuntu
+sudo apt install libxml2 libxml2-dev
 git clone https://github.com/charles-lei/openscenario_validator.git
 cd openscenario_validator
 cargo run --bin scenario_validator -- --xml tests\openscenario1.0.xml --xsd tests\openscenario1.0.xsd

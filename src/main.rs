@@ -50,8 +50,11 @@ fn test_openscenario1_0(){
   let result = validate("tests/openscenario1.0.xml", "tests/openscenario1.0.xsd");
   match result{
     Ok(msg) => {println!("{}", msg)},
-    Err(_) => {
-      panic!("Failed")
+    Err(errors) => {
+      for err in &errors {
+        println!("{}", err.message());
+      }
+      panic!("Validate tests/openscenario1.0.xml Failed");
     }
   }
 }
@@ -65,8 +68,11 @@ fn test_openscenario1_2() -> Result<(), walkdir::Error>{
       let result = validate(path.to_str().unwrap(), "tests/openscenario1.2.xsd");
       match result{
         Ok(msg) => {println!("{}", msg)},
-        Err(_) => {
-          panic!("Failed")
+        Err(errors) => {
+          for err in &errors {
+            println!("{}", err.message());
+          }
+          panic!("Validate {:?} Failed", path);
         }
       }
     }
